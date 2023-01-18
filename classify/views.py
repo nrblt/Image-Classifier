@@ -44,23 +44,17 @@ def index(request):
 
         label = decode_predictions(predictions)
         print(label)
-        # label = label[0][0]
+
         show = []
         for i in range(0, min(5, len(label[0]))):
             mytup=(label[0][i][1],"{:.2f}".format(label[0][i][2] * 100))
-            # show.append(str('%s (%.2f%%)' % (label[0][i][1], label[0][i][2] * 100)))s
             show.append(mytup)
             dbImage = Image()
             dbImage.path = file_url
             dbImage.predicted_label = str('%s (%.2f%%)' % (label[0][i][1], label[0][i][2] * 100))
             dbImage.save()
-        # cnt = 0
 
-        # response['name'] = str('%s (%.2f%%)' % (label[1], label[2] * 100))
         response['names'] = show
         return render(request, 'answerpage.html', response)
-        # return JsonResponse(data)
     else:
-        # request.session['k'] = None
-
         return render(request, 'homepage.html')
